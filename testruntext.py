@@ -16,7 +16,7 @@ class RunText(SampleBase):
     def run(self):
         offscreen_canvas = self.matrix.CreateFrameCanvas()
         font = graphics.Font()
-        font.LoadFont("fonts/tom-thumb.bdf")
+        font.LoadFont("fonts/4x6.bdf")
         textColor = graphics.Color(0, 155, 0)
         pos = 0 #offscreen_canvas.width
 #        current_time = now.strftime("%H:%M:%S")
