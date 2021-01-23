@@ -1,8 +1,9 @@
 from samplebase import SampleBase
-from rgbmatrix import graphics
 from datetime import datetime
 import Adafruit_DHT
 import time
+
+from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 
 DHT_SENSOR = Adafruit_DHT.DHT22
 DHT_PIN = 21
@@ -10,9 +11,7 @@ DHT_PIN = 21
 while True:
 
     humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
-#    temp = round(float((temperature*9/5)+32),1)
-#    humidity = round(float(humidity),1)
-    temp = (temperature)   
+    temp = (temperature)
     print(temp, humidity)
     temp = str(temp)
     humidity = str(humidity)
@@ -39,7 +38,5 @@ while True:
 
     run_text = RunText()
     run_text.process()
-#    if __name__ == "__main__":
-#        run_text = RunText()
-#        if (not run_text.process()):
-#            run_text.print_help()
+    time.sleep(2)
+    

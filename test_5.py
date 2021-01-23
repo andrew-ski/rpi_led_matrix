@@ -7,7 +7,7 @@ import Adafruit_DHT
 # https://github.com/hzeller/rpi-rgb-led-matrix
 from datetime import datetime
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
-
+ 
 
 def make_matrix() -> RGBMatrix:
   options = RGBMatrixOptions()
@@ -31,18 +31,21 @@ def make_matrix() -> RGBMatrix:
 def loop():
   matrix = make_matrix()
   offscreen_canvas = matrix.CreateFrameCanvas()
+
+  continuum = 0
 #  font = graphics.Font()
 #  font.LoadFont("./fonts/4x6.bdf")
 #  textColor = graphics.Color(255, 255, 0)
 #  my_text = 'Hello world'
 
   while True:
-    offscreen_canvas.Clear()
-    DHT_SENSOR = Adafruit_DHT.DHT22
-    DHT_PIN = 21
-    humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
-    temp = (temperature*9/5)+32
-    print(temp, humidity)
+#    DHT_SENSOR = Adafruit_DHT.DHT22
+#    DHT_PIN = 21
+#    humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
+    temp = 00
+    humidity = 00
+#    temp = (temperature*9/5)+32
+#    print(temp, humidity)
     temp=int(temp)
     humidity=int(humidity)
     temp = str(temp)
@@ -51,18 +54,43 @@ def loop():
     current_time = now.strftime("%I:%M")
     font = graphics.Font()
     font.LoadFont("fonts/tom-thumb.bdf")
+    pos = 10
     color_time = graphics.Color(200, 160, 15)
     color_temp = graphics.Color(171, 28, 0)
     color_humidity = graphics.Color(0, 40, 150)
 #    color_background = graphics.Color(3, 8, 5)
 #    color_background = graphics.Color(0, 2, 5)
-    color_background = graphics.Color(0, 0, 0)
+#    color_background = graphics.Color(0, 0, 0)
 
-    i = 0
-    for i in range(0, 16):
-        graphics.DrawLine(offscreen_canvas, 0, i, 32, i, color_background)
-        i += 1
-    pos = 10
+#    i = 0
+#    for i in range(0, 16):
+#        graphics.DrawLine(offscreen_canvas, 0, i, 32, i, color_background)
+#        i += 1
+    time.sleep(0.05)
+#    time.sleep(5 * 1000 / 1000000.0)
+#    usleep(5 * 1000)
+#    time.sleep(.05)
+    continuum += 1
+    continuum %= 3 * 255
+
+    red = 0
+    green = 0
+    blue = 0
+
+    if continuum <= 255:
+        c = continuum
+        blue = 255 - c
+        red = c
+    elif continuum > 255 and continuum <= 511:
+        c = continuum - 256
+        red = 255 - c
+        green = c
+    else:
+        c = continuum - 512
+        green = 255 - c
+        blue = c
+
+    offscreen_canvas.Fill(red, green, blue)
 #draw_clock
     graphics.DrawLine(offscreen_canvas, 4, 3, 4, 1, color_time)
     graphics.DrawLine(offscreen_canvas, 8, 3, 8, 1, color_time)
@@ -91,7 +119,7 @@ def loop():
     graphics.DrawText(offscreen_canvas, font, pos, 10, color_temp, f"{temp}F")
     graphics.DrawText(offscreen_canvas, font, pos, 15, color_humidity, f"{humidity}%")
 
-    time.sleep(30)
+#    time.sleep(30)
     offscreen_canvas = matrix.SwapOnVSync(offscreen_canvas)
 
 # Main function

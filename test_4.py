@@ -37,7 +37,6 @@ def loop():
 #  my_text = 'Hello world'
 
   while True:
-    offscreen_canvas.Clear()
     DHT_SENSOR = Adafruit_DHT.DHT22
     DHT_PIN = 21
     humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
