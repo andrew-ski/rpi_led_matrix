@@ -61,8 +61,8 @@ def loop():
 #    for i in range(0, 16):
 #        graphics.DrawLine(offscreen_canvas, 0, i, 32, i, color_background)
 #        i += 1
-#    time.sleep(0.05)
-    time.sleep(5 * 1000 / 1000000.0)
+    time.sleep(0.005)
+#    time.sleep(5 * 1000 / 1000000.0)
 #    usleep(5 * 1000)
 #    time.sleep(.05)
     continuum += 1
