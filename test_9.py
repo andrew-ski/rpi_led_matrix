@@ -63,7 +63,7 @@ def loop():
       current_time = (f"{now.strftime('%I:%M')}A")
     font = graphics.Font()
 #    font.LoadFont("fonts/tom-thumb.bdf")
-    font.LoadFont("/home/pi/Projects/Matrix/fonts/5x8.bdf") 
+    font.LoadFont("fonts/5x8.bdf") 
     pos = 10
     color_time = graphics.Color(200, 160, 15)
     color_temp = graphics.Color(255, 42, 0)
@@ -79,7 +79,7 @@ def loop():
 #    time.sleep(.01)
 #    time.sleep(5 * 1000 / 1000000.0)
 #    usleep(5 * 1000)
-    time.sleep(.05)
+#    time.sleep(.05)
     continuum += 1
     continuum %= 3 * 15
 
@@ -117,8 +117,7 @@ def loop():
  #   graphics.DrawLine(offscreen_canvas, 0, 13, 4, 13, graphics.Color(200,50,0))
 #    graphics.DrawLine(offscreen_canvas, 1, 14, 3, 14, graphics.Color(255,0,0))
     if frame == 1:
-      f1x = randint(0,5)
-      graphics.DrawLine(offscreen_canvas,f1x, 9, 3, 9, graphics.Color(200,160,0))
+      graphics.DrawLine(offscreen_canvas,3, 9, 3, 9, graphics.Color(200,160,0))
       frame = randint(1,3)
     elif frame == 2:
       graphics.DrawLine(offscreen_canvas,4, 10, 4, 10, graphics.Color(200,60,0))

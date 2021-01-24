@@ -42,7 +42,7 @@ def loop():
   trigger_time = now + delta
 
   while True:
-    current_time = now.strftime("%I:%M")
+#    current_time = datetime().now.strftime("%I:%M")
     if (first_run == True) or (datetime.now() > trigger_time):
 #      print("Loop Complete")
       trigger_time = datetime.now() + delta
@@ -54,9 +54,15 @@ def loop():
       humidity=str(int(humidity))
       first_run = False
  #      print(f"now:{str(datetime.now())} trigger:{str(trigger_time)}")
-
+    now = datetime.now()
+    current_time = now.strftime("%H")
+    if int(current_time) > 11:
+      current_time = (f"{now.strftime('%I:%M')}P")
+    else:
+      current_time = (f"{now.strftime('%I:%M')}A")
     font = graphics.Font()
-    font.LoadFont("fonts/tom-thumb.bdf")
+#    font.LoadFont("fonts/tom-thumb.bdf")
+    font.LoadFont("fonts/5x8.bdf") 
     pos = 10
     color_time = graphics.Color(200, 160, 15)
     color_temp = graphics.Color(171, 28, 0)
@@ -74,55 +80,56 @@ def loop():
 #    usleep(5 * 1000)
 #    time.sleep(.05)
     continuum += 1
-    continuum %= 3 * 5
+    continuum %= 3 * 10
 
     red = 0
     green = 0
     blue = 0
 
-    if continuum <= 5:
+    if continuum <= 10:
         c = continuum
-        blue = 5 - c
+        blue = 10 - c
         red = c
-    elif continuum > 5 and continuum <= 10:
-        c = continuum - 6
-        red = 5 - c
+    elif continuum > 10 and continuum <= 20:
+        c = continuum - 11
+        red = 10 - c
         green = c
     else:
-        c = continuum - 11
-        green = 5 - c
+        c = continuum - 21
+        green = 10 - c
         blue = c
 
     offscreen_canvas.Fill(red, green, blue)
 #draw_clock
-    graphics.DrawLine(offscreen_canvas, 4, 3, 4, 1, color_time)
-    graphics.DrawLine(offscreen_canvas, 8, 3, 8, 1, color_time)
-    graphics.DrawLine(offscreen_canvas, 5, 0, 7, 0, color_time)
-    graphics.DrawLine(offscreen_canvas, 5, 4, 7, 4, color_time)
-    graphics.DrawLine(offscreen_canvas, 6, 1, 6, 2, color_time)
-    graphics.DrawLine(offscreen_canvas, 7, 2, 7, 2, color_time)
+#    graphics.DrawLine(offscreen_canvas, 0, 6, 0, 4, color_time)
+#    graphics.DrawLine(offscreen_canvas, 4, 6, 4, 4, color_time)
+#    graphics.DrawLine(offscreen_canvas, 1, 3, 3, 3, color_time)
+#    graphics.DrawLine(offscreen_canvas, 1, 7, 3, 7, color_time)
+#    graphics.DrawLine(offscreen_canvas, 2, 4, 2, 5, color_time)
+#    graphics.DrawLine(offscreen_canvas, 3, 5, 3, 5, color_time)
 
 #draw_fire
-    graphics.DrawLine(offscreen_canvas, 6, 5, 6, 5, graphics.Color(75,40,0))
-    graphics.DrawLine(offscreen_canvas, 5, 6, 7, 6, graphics.Color(100,60,0))
-    graphics.DrawLine(offscreen_canvas, 4, 7, 8, 7, graphics.Color(125,40,0))
-    graphics.DrawLine(offscreen_canvas, 4, 8, 8, 8, graphics.Color(175,30,0))
-    graphics.DrawLine(offscreen_canvas, 5, 9, 7, 9, graphics.Color(255,0,0))
+    graphics.DrawLine(offscreen_canvas, 2, 9, 2, 9, graphics.Color(80,40,0))
+    graphics.DrawLine(offscreen_canvas, 1, 10, 3, 10, graphics.Color(100,60,0))
+    graphics.DrawLine(offscreen_canvas, 0, 11, 4, 11, graphics.Color(120,80,0))
+    graphics.DrawLine(offscreen_canvas, 0, 12, 4, 12, graphics.Color(175,75,0))
+    graphics.DrawLine(offscreen_canvas, 0, 13, 4, 13, graphics.Color(200,50,0))
+    graphics.DrawLine(offscreen_canvas, 1, 14, 3, 14, graphics.Color(255,0,0))
 
 #draw_raindrop
-    graphics.DrawLine(offscreen_canvas, 6, 10, 6, 10, color_humidity)
-    graphics.DrawLine(offscreen_canvas, 5, 11, 7, 11, color_humidity)
-    graphics.DrawLine(offscreen_canvas, 4, 12, 8, 12, color_humidity)
-    graphics.DrawLine(offscreen_canvas, 4, 13, 8, 13, color_humidity)
-    graphics.DrawLine(offscreen_canvas, 5, 14, 7, 14, color_humidity)
+    graphics.DrawLine(offscreen_canvas, 19, 9, 19, 9, color_humidity)
+    graphics.DrawLine(offscreen_canvas, 18, 10, 20, 10, color_humidity)
+    graphics.DrawLine(offscreen_canvas, 17, 11, 21, 11, color_humidity)
+    graphics.DrawLine(offscreen_canvas, 17, 12, 21, 12, color_humidity)
+    graphics.DrawLine(offscreen_canvas, 17, 13, 21, 13, color_humidity)
+    graphics.DrawLine(offscreen_canvas, 18, 14, 20, 14, color_humidity)
 #    graphics.DrawCircle(offscreen_canvas, 1, 1, 1, color_red)
 #    graphics.DrawLine(offscreen_canvas, 0, 5, 32, 5, color_blue)
 
-    graphics.DrawText(offscreen_canvas, font, pos, 5, color_time ,current_time)
-    graphics.DrawText(offscreen_canvas, font, pos, 10, color_temp, f"{temp}F")
-    graphics.DrawText(offscreen_canvas, font, pos, 15, color_humidity, f"{humidity}%")
+    graphics.DrawText(offscreen_canvas, font, 1, 7, color_time ,current_time)
+    graphics.DrawText(offscreen_canvas, font, 6, 15, color_temp, f"{temp}")
+    graphics.DrawText(offscreen_canvas, font, 23, 15, color_humidity, f"{humidity}")
 
-#    time.sleep(30)
     offscreen_canvas = matrix.SwapOnVSync(offscreen_canvas)
 
 # Main function
