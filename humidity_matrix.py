@@ -32,17 +32,19 @@ def loop():
   matrix = make_matrix()
   offscreen_canvas = matrix.CreateFrameCanvas()
   now = datetime.now()
+#Set delta interval
   delta = timedelta(seconds = 15)
   continuum = 0
   first_run = True
   frame = 1
+# color change starting points
   ch = 100
   ch_d = True
   f_y_r = 150
   f_y_d = True
 
   trigger_time = now + delta
-
+# Get Sensor data every delta interval
   while True:
 
     if (first_run == True) or (datetime.now() > trigger_time):
@@ -55,7 +57,7 @@ def loop():
 
       humidity=str(int(humidity))
       first_run = False
-
+# Get time
     now = datetime.now()
     current_time = now.strftime("%H")
     if int(current_time) > 11:
@@ -66,10 +68,12 @@ def loop():
 
     font.LoadFont("/home/pi/Projects/Matrix/fonts/5x8.bdf") 
     pos = 10
+
+# Set colors for drawing
     color_time = graphics.Color(200, 160, 15)
     color_temp = graphics.Color(255, 42, 0)
 
-#    f_y_r = randint(150,250)
+# Let there be fire
     f_y_g = f_y_r/1.3
     f_yellow = graphics.Color(f_y_r, f_y_g, 0)
 
@@ -121,9 +125,10 @@ def loop():
       f_y_r -= 15
       if f_y_r == 90:
         f_y_d = True
-#draw_raindrop
 
-#    for ch in range(10, 230):
+
+# draw_raindrop
+
     color_humidity = graphics.Color(0, (ch/3.75), ch)
     graphics.DrawLine(offscreen_canvas, 19, 9, 19, 9, color_humidity)
     graphics.DrawLine(offscreen_canvas, 18, 10, 20, 10, color_humidity)
@@ -140,9 +145,8 @@ def loop():
       ch -= 10
       if ch == 100:
         ch_d = True
-#    graphics.DrawCircle(offscreen_canvas, 1, 1, 1, color_red)
-#    graphics.DrawLine(offscreen_canvas, 0, 5, 32, 5, color_blue)
 
+# draw
     graphics.DrawText(offscreen_canvas, font, 1, 7, color_time ,current_time)
     graphics.DrawText(offscreen_canvas, font, 6, 15, color_temp, f"{temp}")
     graphics.DrawText(offscreen_canvas, font, 23, 15, graphics.Color(0,60,225), f"{humidity}")
