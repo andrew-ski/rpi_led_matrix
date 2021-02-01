@@ -19,7 +19,7 @@ def make_matrix() -> RGBMatrix:
 #  options.row_address_type = 0
 #  options.multiplexing = 0
 #  options.pwm_bits = 11
-  options.brightness = 65
+  options.brightness = 50
 #  options.pwm_lsb_nanoseconds = 130
 #  options.led_rgb_sequence = 'RGB'
 #  options.pixel_mapper_config = ''
@@ -32,7 +32,7 @@ def loop():
   matrix = make_matrix()
   offscreen_canvas = matrix.CreateFrameCanvas()
   now = datetime.now()
-  delta = timedelta(seconds = 15)
+  delta = timedelta(seconds = 5)
   continuum = 0
   first_run = True
   frame = 1
@@ -55,6 +55,8 @@ def loop():
 
       humidity=str(int(humidity))
       first_run = False
+    temp2 = "00"
+    humidity2 = "00"
 
     now = datetime.now()
     current_time = now.strftime("%H")
@@ -144,11 +146,11 @@ def loop():
 #    graphics.DrawLine(offscreen_canvas, 0, 5, 32, 5, color_blue)
 
     graphics.DrawText(offscreen_canvas, font, 1, 7, color_time ,current_time)
-    graphics.DrawText(offscreen_canvas, font, 6, 15, color_temp, f"{temp}")
-    graphics.DrawText(offscreen_canvas, font, 23, 15, graphics.Color(0,60,225), f"{humidity}")
+    graphics.DrawText(offscreen_canvas, font, 6, 15, color_temp, f"{temp2}")
+    graphics.DrawText(offscreen_canvas, font, 23, 15, graphics.Color(0,60,225), f"{humidity2}")
 
     offscreen_canvas = matrix.SwapOnVSync(offscreen_canvas)
-    time.sleep(.005)
+#    time.sleep(.005)
     offscreen_canvas.Clear()
 
 # Main function

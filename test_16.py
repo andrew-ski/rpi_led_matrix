@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys
+import sys,argparse,csv
 import time
 import Adafruit_DHT
 # Requires rgbmatrix installed via special procedure from
@@ -23,7 +23,7 @@ def make_matrix() -> RGBMatrix:
 #  options.pwm_lsb_nanoseconds = 130
 #  options.led_rgb_sequence = 'RGB'
 #  options.pixel_mapper_config = ''
-#  options.gpio_slowdown = 1
+  options.gpio_slowdown = 4
   options.drop_privileges = False
   return RGBMatrix(options=options)
 
@@ -45,16 +45,13 @@ def loop():
 
   while True:
 
-    if (first_run == True) or (datetime.now() > trigger_time):
-
-      trigger_time = datetime.now() + delta
-      DHT_SENSOR = Adafruit_DHT.DHT22
-      DHT_PIN = 21
-      humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
-      temp = str(int((temperature*9/5)+32))
-
-      humidity=str(int(humidity))
-      first_run = False
+    with open ('dht_data.csv') as csv_file:
+      csv_reader=csv.DictReader(csv_file,delimiter=',')
+      line_count=0
+      for row in csv_reader:
+        temp=row["temperature"]
+        humidity=row["humidity"]
+      csv_file.close()
 
     now = datetime.now()
     current_time = now.strftime("%H")
@@ -69,7 +66,7 @@ def loop():
     color_time = graphics.Color(200, 160, 15)
     color_temp = graphics.Color(255, 42, 0)
 
-#    f_y_r = randint(150,250)
+
     f_y_g = f_y_r/1.3
     f_yellow = graphics.Color(f_y_r, f_y_g, 0)
 
@@ -148,7 +145,7 @@ def loop():
     graphics.DrawText(offscreen_canvas, font, 23, 15, graphics.Color(0,60,225), f"{humidity}")
 
     offscreen_canvas = matrix.SwapOnVSync(offscreen_canvas)
-    time.sleep(.005)
+    time.sleep(5)
     offscreen_canvas.Clear()
 
 # Main function

@@ -131,7 +131,12 @@ def loop():
     graphics.DrawLine(offscreen_canvas, 17, 12, 21, 12, color_humidity)
     graphics.DrawLine(offscreen_canvas, 17, 13, 21, 13, color_humidity)
     graphics.DrawLine(offscreen_canvas, 18, 14, 20, 14, color_humidity)
-
+#    graphics.DrawLine(offscreen_canvas, 18, 11, 18, 11, graphics.Color(155,155,255))
+#    graphics.DrawLine(offscreen_canvas, 18, 12, 18, 12, graphics.Color(50,100,175))
+#    graphics.DrawLine(offscreen_canvas, 18, 13, 19, 14, graphics.Color(50,100,175))
+    graphics.DrawLine(offscreen_canvas, 18, 12, 18, 12, graphics.Color(100,100,100))
+    graphics.DrawLine(offscreen_canvas, 20, 12, 20, 12, graphics.Color(100,100,100))
+#    graphics.DrawLine(offscreen_canvas, 18, 13, 20, 13, graphics.Color(0,0,0))
     if ch_d == True and ch < 220:
       ch += 10
       if ch == 220:

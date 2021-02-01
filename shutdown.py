@@ -17,7 +17,7 @@ import os
 # Use the Broadcom SOC Pin numbers
 
 # Setup the pin with internal pullups enabled and pin in reading mode.
-
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(3, GPIO.IN, pull_up_down=GPIO.PUD_UP)

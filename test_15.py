@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys
+import sys,argparse,csv
 import time
 import Adafruit_DHT
 # Requires rgbmatrix installed via special procedure from
@@ -45,16 +45,25 @@ def loop():
 
   while True:
 
-    if (first_run == True) or (datetime.now() > trigger_time):
+    with open ('test.csv') as csv_file:
+      csv_reader=csv.DictReader(csv_file,delimiter=',')
+      line_count=0
+      for row in csv_reader:
+        temp=row["test1"]
+        humidity=row["test2"]
+#      csv_file.close()
+#    if (first_run == True) or (datetime.now() > trigger_time):
 
-      trigger_time = datetime.now() + delta
-      DHT_SENSOR = Adafruit_DHT.DHT22
-      DHT_PIN = 21
-      humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
-      temp = str(int((temperature*9/5)+32))
+#      trigger_time = datetime.now() + delta
+#      DHT_SENSOR = Adafruit_DHT.DHT22
+#      DHT_PIN = 21
+#      humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
+#      temp = str(int((temperature*9/5)+32))
+#      humidity=str(int(humidity))
 
-      humidity=str(int(humidity))
-      first_run = False
+#      first_run = False
+#    temp = "00"
+#    humidity = "00"
 
     now = datetime.now()
     current_time = now.strftime("%H")
